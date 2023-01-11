@@ -13,8 +13,15 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>MonasCI</name>
 	<description>A Unified CI pipeline experience</description>
+	<repositories>
+		<repository>
+			<id>Sonatype</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</repository>
+	</repositories>
 	<properties>
 		<java.version>17</java.version>
+		<epsilon.version>2.4.0</epsilon.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -26,6 +33,31 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- Emf Epsilon dependencies -->
+		<dependency>
+			<groupId>org.eclipse.epsilon</groupId>
+			<artifactId>org.eclipse.epsilon.emc.emf</artifactId>
+			<version>${epsilon.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.epsilon</groupId>
+			<artifactId>org.eclipse.epsilon.etl.engine</artifactId>
+			<version>${epsilon.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.epsilon</groupId>
+			<artifactId>org.eclipse.epsilon.flexmi</artifactId>
+			<version>${epsilon.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.emfatic</groupId>
+			<artifactId>org.eclipse.emfatic.core</artifactId>
+			<version>1.1.0-20210403.111907-2</version>
 		</dependency>
 	</dependencies>
 
