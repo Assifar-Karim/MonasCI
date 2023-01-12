@@ -39,13 +39,6 @@ class Environment {
     attr String[1] value;
 }
 
-class Script {
-    val Command[+] commands;
-}
-
-class Command {
-    attr String[1] task;
-}
 
 /* 
 -> example of yml workflow that repect this stucture ! 
