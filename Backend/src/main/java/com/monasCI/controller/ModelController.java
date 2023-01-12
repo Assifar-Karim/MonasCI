@@ -1,6 +1,7 @@
 package com.monasCI.controller;
 
 import com.monasCI.Service.M2MTransformationService;
+import com.monasCI.Service.M2TTransformationService;
 import com.monasCI.dto.TransformationDTO;
 import org.eclipse.epsilon.emc.emf.InMemoryEmfModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ModelController
 {
     @Autowired
-    private M2MTransformationService transformationService;
+    private M2MTransformationService m2mTransformationService;
+    @Autowired
+    private M2TTransformationService m2tTransformationService;
 
     // NOTE (KARIM) : This method needs to start with an M2M transformation then proceed with a M2T transformation
     @PostMapping("/")
@@ -29,8 +32,10 @@ public class ModelController
                 "\t</tree>\n" +
                 "</tree>");
         transformationDTO.setTargetCI("graph");
-        InMemoryEmfModel targetModel = transformationService
+        InMemoryEmfModel targetModel = m2mTransformationService
                 .m2mTransformation(transformationDTO.getSourceFlexmi(), transformationDTO.getTargetCI());
-        return null;
+        String generatedConfigFile = m2tTransformationService
+                .m2tTransformation(targetModel, transformationDTO.getTargetCI());
+        return ResponseEntity.ok(generatedConfigFile);
     }
 }
