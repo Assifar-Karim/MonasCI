@@ -6,7 +6,6 @@ package config;
 
 
 class ConfigYml {
-    val Version[1] version;
     val Stage[+] stages;
 }
 
@@ -20,19 +19,19 @@ class Job {
     val Docker[1] docker;
     val Script[1] script;
     val Environment[*] environmentVariables;
-    val Dependencies[*] dependencies;
 }
 
-class Version {
-    attr String[1] value;
-}
 
 class Docker {
     attr String[1] image;
 }
 
 class Script {
-    attr String[*] commands;
+    val Command[+] commands;
+}
+
+class Command {
+    attr String[1] task;
 }
 
 class Environment {
@@ -40,14 +39,17 @@ class Environment {
     attr String[1] value;
 }
 
-class Dependencies {
-    attr String[*] jobs;
+class Script {
+    val Command[+] commands;
+}
+
+class Command {
+    attr String[1] task;
 }
 
 /* 
 -> example of yml workflow that repect this stucture ! 
 -------------------------------------------------
-version: 2.1
 
 stages:
   - build
