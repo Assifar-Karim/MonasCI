@@ -17,6 +17,7 @@ import "@fontsource/inter"; // Defaults to weight 400.
 const pages = ["Home", "Products", "About", "Contact"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const appName = "MonasCI";
+const blackColor = "#2A3342";
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -38,7 +39,7 @@ function NavBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ bgcolor: "white" }}>
+    <AppBar position="static" sx={{ bgcolor: "white",boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.21)" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box
@@ -46,7 +47,8 @@ function NavBar() {
             src={logo}
             sx={{
               display: { xs: "none", md: "flex" },
-              mr: { xs: 0, md: 1 },
+              mr: 1,
+              ml: 4,
               height: "30px",
             }}
           />
@@ -63,7 +65,7 @@ function NavBar() {
               fontWeight: 700,
               fontSize: "18px",
               // letterSpacing: '.3rem',
-              color: "#2A3342",
+              color: blackColor,
               textDecoration: "none",
             }}
           >
@@ -77,7 +79,7 @@ function NavBar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              sx={{ color: blackColor }}
             >
               <MenuIcon />
             </IconButton>
@@ -114,8 +116,8 @@ function NavBar() {
             src={logo}
             sx={{
               display: { xs: "flex", md: "none" },
-              mr: { xs: 0, md: 1 },
-              height: { xs: "50px", md: "60px" },
+              mr: 1,
+              height: "30px",
             }}
           />
           <Typography
@@ -130,25 +132,34 @@ function NavBar() {
               fontFamily: "Inter",
               fontWeight: 700,
               // letterSpacing: '.3rem',
-              color: "#2A3342",
+              color: blackColor,
               textDecoration: "none",
             }}
           >
             {appName}
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box
+            flexGrow={1}
+            justifyContent="flex-end"
+            sx={{ display: { xs: "none", md: "flex" }, mr: 4 }}
+          >
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "black", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: blackColor,
+                  display: "block",
+                  textTransform: "none",
+                }}
               >
                 {page}
               </Button>
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          {/* <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -176,7 +187,24 @@ function NavBar() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> */}
+          <Button
+            sx={{
+              flexGrow: 0,
+              bgcolor: "#F8911E",
+              color: "white",
+              borderRadius: 36,
+              textTransform: "none",
+              px: 2,
+              '&:hover': {
+                bgcolor: "white",
+                color: "#F8911E",
+                border: "1px solid #F8911E",
+              }
+            }}
+          >
+            Get Started
+          </Button>
         </Toolbar>
       </Container>
     </AppBar>
