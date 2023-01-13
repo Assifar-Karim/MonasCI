@@ -1,0 +1,26 @@
+<?nsuri config?>
+<configYml>
+    <version version="2.0"/>
+    <job name="build">
+        <docker image="openjdk:11-jdk-slim"/>
+        <environment key="KEY" value="test value"/>
+        <steps checkout="checkout">
+            <run name="test command" command="mvn install"/>
+            <run name="test command 2" command="mvn package"/>
+        </steps>
+        <requires name="test"/>
+        <requires name="test2"/>
+    </job>
+    <workflow name="buildwf">
+       <job name="build">
+            <docker image="openjdk:11-jdk-slim"/>
+            <environment key="KEY" value="test value"/>
+            <steps checkout="checkout">
+                <run name="test command" command="mvn install"/>
+                <run name="test command 2" command="mvn package"/>
+            </steps>
+            <requires name="test"/>
+            <requires name="test2"/>
+        </job>
+    </workflow>
+</configYml>

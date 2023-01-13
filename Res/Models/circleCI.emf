@@ -16,7 +16,7 @@ class Job {
 	val Docker[1] docker;
 	val Environment[*] environmentVariables;
 	val Steps[1] steps;
-	val Requires[1] requires;
+	val Requires[*] requires;
 }
 
 class Docker{
@@ -34,7 +34,7 @@ class Run{
 }
 
 class Requires{
-	attr String[+] requires;
+	attr String[1] name;
 }
 
 class Environment{

@@ -1,0 +1,23 @@
+<?nsuri config?>
+<configYml>
+    <stage name="build">
+        <job name="build">
+            <docker image="python:2.7"/>
+            <script name="script">
+                <command task="echo Build app"/>
+                <command task="make build"/>
+            </script>
+            <environment name="CI" value="true"/>
+        </job>
+    </stage>
+    <stage name="test">
+        <job name="test">
+            <docker image="python:2.7"/>
+            <script name="script">
+                <command task="echo Running tests"/>
+                <command task="make test"/>
+            </script>
+            <environment name="CI" value="true"/>
+        </job>
+    </stage>
+</configYml>
