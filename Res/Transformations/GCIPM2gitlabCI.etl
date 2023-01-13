@@ -1,0 +1,37 @@
+  rule Pipeline2ConfigYml
+  transform s : Source!Pipeline
+  to t : Target!ConfigYml {}
+
+    rule GlobalUnit2Stage
+  transform globalUnit : Source!GlobalUnit
+  to stage : Target!Stage {
+    stage.name = globalUnit.name;
+    for(job in globalUnit.jobs) {
+
+    var stageJob = new Target!Job;
+    stageJob.name = job.name;
+
+    var docker = new Target!Docker;
+    docker.image = job.docker.imageName;
+    stageJob.docker = docker;
+
+    var script = new Target!Script;
+    for(command in job.commands) {
+    var scriptCommand = new Target!Command;
+    scriptCommand.task = command.task;
+    script.commands.add(scriptCommand);
+    }
+    stageJob.script = script;
+
+    for(env in job.environmentVariables) {
+    var jobEnv = new Target!Environment;
+    jobEnv.name = env.key;
+    jobEnv.value = env.value;
+    stageJob.environmentVariables.add(jobEnv);
+    }
+
+    stage.jobs.add(stageJob);
+  }
+    var configYml = Target!ConfigYml.all.first();
+    configYml.stages.add(stage);
+  }
