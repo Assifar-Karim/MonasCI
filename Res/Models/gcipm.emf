@@ -16,7 +16,7 @@ class Job {
 	val Docker[1] docker;
 	val Command[+] commands;
 	val EnvironmentVar[*] environmentVariables;
-	val Dependency[0..1] dependency; // For dependency jobs ordering in circleCI 
+	val Dependency[*] dependencies; // For dependency jobs ordering in circleCI 
 }
 
 class Docker {
@@ -34,5 +34,5 @@ class EnvironmentVar {
 }
 
 class Dependency {
-	attr String[+] dependencies;
+	attr String[1] dependencies;
 }
