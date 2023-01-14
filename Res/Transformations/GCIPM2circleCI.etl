@@ -1,0 +1,54 @@
+rule Pipeline2ConfigYml
+	transform s : Source!Pipeline
+	to t : Target!ConfigYml {
+	    var Targetversion = new Target!Version;
+	    Targetversion.version = "2"; 
+	    t.version = Targetversion;
+	    
+	    var workflow = new Target!Workflow; 
+	    workflow.name = "Workflow"; 
+	    
+    for(globalUnit in s.globalUnits){
+	
+	   for(Sjob in globalUnit.jobs) {
+
+           var TargetJob = new Target!Job;
+            TargetJob.name = Sjob.name;
+
+           var docker = new Target!Docker;
+           docker.image = Sjob.docker.imageName;
+            TargetJob.docker = docker;
+
+
+
+    for(env in Sjob.environmentVariables) {
+    var TargetjobEnv = new Target!Environment;
+    TargetjobEnv.key = env.key;
+    TargetjobEnv.value = env.value;
+    TargetJob.environmentVariables.add(TargetjobEnv);
+    }
+	
+	var steps = new Target!Steps;
+	steps.checkout="checkout";
+    for(Scommand in Sjob.commands) {
+    var TargetRun = new Target!Run;
+    TargetRun.name = Scommand.name;
+	TargetRun.command = Scommand.task;
+    steps.runs.add(TargetRun);
+    }
+    TargetJob.steps = steps;
+    
+    for(dependency in Sjob.dependency){
+        var Treq= new Target!Requires;
+          Treq.name = dependency.dependencies;
+          TargetJob.requires.add(Treq);
+    }
+    
+    t.jobs.add(TargetJob);
+    workflow.jobs.add(TargetJob);
+
+  }
+	    
+	}
+	    t.workflow=workflow ; 
+	}
