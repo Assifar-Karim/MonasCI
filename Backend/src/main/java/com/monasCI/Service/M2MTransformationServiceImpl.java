@@ -50,16 +50,20 @@ public class M2MTransformationServiceImpl implements M2MTransformationService
         module.getContext().getModelRepository().addModel(targetModel);
 
         module.execute();
-        targetModel.allContents().forEach(System.out::println);
+        // targetModel.allContents().forEach(System.out::println);
         return targetModel;
     }
 
     @PostConstruct
     public void loadFiles() throws FileNotFoundException
     {
-        // NOTE (KARIM) : these transformations and metamodels will need to later be substituted with the real ones
-        targetTransformations = Map.of("graph", FileReader.readFile("transformations/dummy.etl"));
-        targetMetaModels = Map.of("graph", FileReader.readFile("models/graph.emf"));
-        gcipm = FileReader.readFile("models/tree.emf");
+        targetTransformations = Map.of(
+                "gitlabCI", FileReader.readFile("transformations/GCIPM2gitlabCI.etl")
+        );
+        targetMetaModels = Map.of(
+                "gitlabCI", FileReader.readFile("models/gitlabCI.emf"),
+                "circleCI", FileReader.readFile("models/circleCI.emf")
+        );
+        gcipm = FileReader.readFile("models/gcipm.emf");
     }
 }

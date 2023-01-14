@@ -1,0 +1,20 @@
+[%var p = ConfigYml.all.first();%]
+stages:
+  [%for (stage in p.stages){%]
+    - [%=stage.name%]
+  [%}%]
+[%for (stage in p.stages){%]
+    [%for (job in stage.jobs){%]
+[%=job.name%]:
+  stage: [%=stage.name%]
+  image: [%=job.docker.image%]
+  variables:
+  [%for (env in job.environmentVariables){%]
+    [%=env.name%]: [%=env.value%]
+  [%}%]
+  script:
+  [%for (command in job.script.commands){%]
+    - [%=command.task%]
+  [%}%]
+    [%}%]
+[%}%]

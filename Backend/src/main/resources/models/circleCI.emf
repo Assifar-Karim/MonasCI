@@ -1,0 +1,48 @@
+@namespace(uri="config",prefix="")
+package config;
+
+class ConfigYml{
+	val Version[1] version;
+	val Job[+] jobs;
+	val Workflow[0..1] workflow;
+}
+
+class Version{
+	attr String[1] version;
+}
+
+class Job {
+	attr String[1] name;
+	val Docker[1] docker;
+	val Environment[*] environmentVariables;
+	val Steps[1] steps;
+	val Requires[*] requires;
+}
+
+class Docker{
+	attr String[1] image;
+}
+
+class Steps{
+    attr String[1] checkout;
+	val Run[*] runs;
+}
+
+class Run{
+	attr String[1] name;
+	attr String[1] command;
+}
+
+class Requires{
+	attr String[1] name;
+}
+
+class Environment{
+	attr String[1] key;
+	attr String[1] value;
+}
+
+class Workflow{
+	attr String[1] name;
+	val Job[+] jobs;
+}
