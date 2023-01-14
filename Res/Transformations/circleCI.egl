@@ -1,7 +1,7 @@
 [%var p = ConfigYml.all.first();%]
 version: "[%=p.version.version%]"
 jobs:
-  [%for (job in p.jobs){%]
+  [%for (job in p.workflow.jobs){%]
   [%=job.name%]:
     docker:
       - image: [%=job.docker.image%]
@@ -17,7 +17,6 @@ jobs:
           command: [%=run.command%]
       [%}%]
   [%}%]
-[%if(p.workflow != null){%]
 workflows:
   [%=p.workflow.name%]:
     jobs:
@@ -33,4 +32,3 @@ workflows:
           [%}%]
       [%}%]
       [%}%]
-[%}%]

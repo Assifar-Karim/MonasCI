@@ -38,15 +38,12 @@ rule Pipeline2ConfigYml
     }
     TargetJob.steps = steps;
     
-    for(dependency in Sjob.dependency){
+    for(dependency in Sjob.dependencies){
         var Treq= new Target!Requires;
           Treq.name = dependency.dependencies;
           TargetJob.requires.add(Treq);
     }
-    
-    t.jobs.add(TargetJob);
     workflow.jobs.add(TargetJob);
-
   }
 	    
 	}

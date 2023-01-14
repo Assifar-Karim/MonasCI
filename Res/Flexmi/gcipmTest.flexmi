@@ -1,0 +1,20 @@
+<?nsuri gcipm?>
+<pipeline>
+    <globalUnit name="test">
+        <job name="test">
+            <docker imageName="python:2.7"/>
+            <command name="" task="echo Running tests"/>
+            <command name="" task="make test"/>
+            <environmentVar key="CI" value="true"/>
+        </job>
+    </globalUnit>
+    <globalUnit name="build" dependsOn="test">
+        <job name="build">
+            <docker imageName="python:2.7"/>
+            <command name="" task="echo Build app"/>
+            <command name="" task="make build"/>
+            <environmentVar key="CI" value="true"/>
+            <dependency dependencies="test"/>
+        </job>
+    </globalUnit>
+</pipeline>

@@ -1,7 +1,0 @@
-package tree;
-
-class Tree {
-	attr String label;
-	val Tree[*]#parent children;
-	ref Tree#children parent;
-}
