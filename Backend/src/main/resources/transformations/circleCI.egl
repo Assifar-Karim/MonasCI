@@ -1,0 +1,34 @@
+[%var p = ConfigYml.all.first();%]
+version: "[%=p.version.version%]"
+jobs:
+  [%for (job in p.workflow.jobs){%]
+  [%=job.name%]:
+    docker:
+      - image: [%=job.docker.image%]
+    environment:
+      [%for (env in job.environmentVariables){%]
+      [%=env.key%]: [%=env.value%]
+      [%}%]
+    steps:
+      - [%=job.steps.checkout%]
+      [%for (run in job.steps.runs){%]
+      - run:
+          name: [%=run.name%]
+          command: [%=run.command%]
+      [%}%]
+  [%}%]
+workflows:
+  [%=p.workflow.name%]:
+    jobs:
+      [%for (job in p.workflow.jobs){%]
+      [% if (job.requires.size() == 0) {%]
+      - [%=job.name%]
+      [%}%]
+      [%else {%]
+      - [%=job.name%]:
+          requires:
+          [%for (require in job.requires){%]
+            - [%=require.name%]
+          [%}%]
+      [%}%]
+      [%}%]

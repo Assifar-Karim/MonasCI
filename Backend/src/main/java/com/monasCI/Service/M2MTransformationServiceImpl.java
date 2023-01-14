@@ -58,7 +58,8 @@ public class M2MTransformationServiceImpl implements M2MTransformationService
     public void loadFiles() throws FileNotFoundException
     {
         targetTransformations = Map.of(
-                "gitlabCI", FileReader.readFile("transformations/GCIPM2gitlabCI.etl")
+                "gitlabCI", FileReader.readFile("transformations/GCIPM2gitlabCI.etl"),
+                "circleCI", FileReader.readFile("transformations/GCIPM2circleCI.etl")
         );
         targetMetaModels = Map.of(
                 "gitlabCI", FileReader.readFile("models/gitlabCI.emf"),
