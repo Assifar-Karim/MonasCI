@@ -1,0 +1,38 @@
+@namespace(uri="gcipm",prefix="")
+package gcipm;
+
+class Pipeline {
+	val GlobalUnit[+] globalUnits;
+}
+
+class GlobalUnit {
+	attr String[1] name;
+	val Job[+] jobs;
+	attr String[0..1] dependsOn; // For global units ordering
+}
+
+class Job {
+	attr String[1] name;
+	val Docker[1] docker;
+	val Command[+] commands;
+	val EnvironmentVar[*] environmentVariables;
+	val Dependency[*] dependencies; // For dependency jobs ordering in circleCI 
+}
+
+class Docker {
+	attr String[1] imageName;
+}
+
+class Command {
+	attr String[1] name;
+	attr String[1] task;
+}
+
+class EnvironmentVar {
+	attr String[1] key;
+	attr String[1] value;
+}
+
+class Dependency {
+	attr String[1] dependencies;
+}

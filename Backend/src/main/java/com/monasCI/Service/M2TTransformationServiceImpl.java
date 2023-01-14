@@ -31,7 +31,9 @@ public class M2TTransformationServiceImpl implements M2TTransformationService
     @PostConstruct
     public void loadFiles() throws FileNotFoundException
     {
-        // NOTE (KARIM) : these transformations will need to later be substituted with the real ones
-        m2tTransformations = Map.of("transformation 1", FileReader.readFile("transformations/dummy.egl"));
+        m2tTransformations = Map.of(
+                "gitlabCI", FileReader.readFile("transformations/gitlabCI.egl"),
+                "circleCI", FileReader.readFile("transformations/circleCI.egl")
+        );
     }
 }
