@@ -19,6 +19,14 @@ const theme = createTheme({
       fontSize: "1.17em",
       fontWeight: "bold",
     },
+    h4: {
+      fontSize: "0.95em",
+      fontWeight: "bold",
+    },
+    body1: {
+      fontSize: "0.95em",
+      fontWeight: "normal",
+    },
   },
   palette: {
     primary: {
@@ -33,6 +41,10 @@ const theme = createTheme({
       white: "#fff",
       black: "#2A3342",
     },
+    grey:{
+      50: "#d9d9d9",
+      100: "#969696",
+    }
   },
 });
 

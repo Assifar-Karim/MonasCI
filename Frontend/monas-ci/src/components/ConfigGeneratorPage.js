@@ -10,7 +10,7 @@ export const ConfigGeneratorPage = () => {
     <Box
       display="flex"
       flexDirection="column"
-      sx={{ my: 4, width: "80%", mx: "auto" }}
+      sx={{ mt: 4, mb: 8, width: "80%", mx: "auto" }}
       alignItems="center"
       gap={5}
     >

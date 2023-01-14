@@ -6,7 +6,10 @@ import { GlobalUnit } from "./GlobalUnit";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-const globalUnits = ["globalUnit1"];
+const globalUnits = [
+  { name: "Unit1", jobs: ["Job1", "Job2"] , depends_on: ["Unit2"]},
+  { name: "Unit2", jobs: ["Job3", "Job4"] , depends_on: ["Unit1"]},
+];
 
 export const GlobalUnits = () => {
   const [visibleDesc, setVisibleDesc] = React.useState(false);
@@ -31,7 +34,7 @@ export const GlobalUnits = () => {
         <Typography>A global unit is regroupement of jobs</Typography>
       )}
       {globalUnits.map((globalUnit) => {
-        return <GlobalUnit />;
+        return <GlobalUnit globalUnit={globalUnit} />;
       })}
       <AddGlobalUnit />
     </Box>

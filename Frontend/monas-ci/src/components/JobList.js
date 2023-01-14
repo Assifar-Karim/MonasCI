@@ -5,7 +5,22 @@ import { Job } from "./Job";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-const jobs = ["job1"];
+const jobs = [
+  {
+    name: "Job1",
+    docker: "ubuntu:latest",
+    commands: ["echo 'hello'", "mv hello.txt /test"],
+    envVars: [ { name: "TEST", value: "test" } ],
+    dependencies: ["Job2"],
+  },
+  {
+    name: "Job2",
+    docker: "ubuntu:latest",
+    commands: ["echo 'hello'", "echo 'hello'"],
+    envVars: [ { name: "TEST", value: "test" }, { name: "TEST2", value: "test2" } ],
+    dependencies: ["Job1"],
+  },
+];
 
 export const JobList = () => {
   const [visibleDesc, setVisibleDesc] = React.useState(false);
@@ -16,13 +31,13 @@ export const JobList = () => {
         <Typography variant="h2">Jobs</Typography>
         {!visibleDesc && (
           <KeyboardArrowDownIcon
-            sx={{ cursor: "pointer" , title: "Show description"}}
+            sx={{ cursor: "pointer", title: "Show description" }}
             onClick={() => setVisibleDesc(true)}
           />
         )}
         {visibleDesc && (
           <KeyboardArrowUpIcon
-            sx={{ cursor: "pointer" , title: "Hide description"}}
+            sx={{ cursor: "pointer", title: "Hide description" }}
             onClick={() => setVisibleDesc(false)}
           />
         )}
@@ -33,7 +48,7 @@ export const JobList = () => {
         </Typography>
       )}
       {jobs.map((job) => {
-        return <Job />;
+        return <Job job={job} />;
       })}
       <AddJob />
     </Box>
