@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Box, Typography } from "@mui/material";
 
-export const AddGlobalUnit = () => {
+export const AddGlobalUnit = ({setOpen}) => {
   return (
     <Box
       display="flex"
@@ -16,7 +16,7 @@ export const AddGlobalUnit = () => {
         borderRadius: 2,
         cursor: "pointer",
       }}
-      onClick={() => console.log("Add Global Unit")}
+      onClick={() => setOpen(true)}
     >
       <Box>
         <Typography variant="h3">Add Global Unit</Typography>

@@ -4,7 +4,6 @@ import {
   Box,
   FormControl,
   InputBase,
-  InputLabel,
   MenuItem,
   Select,
   styled,
@@ -45,7 +44,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const Configuration = () => {
+export const Configuration = ({setTargetCi}) => {
   return (
     <Box
       display="flex"
@@ -60,13 +59,15 @@ export const Configuration = () => {
           <Select
             labelId="demo-customized-select-label"
             id="demo-customized-select"
-            value={10}
             input={<BootstrapInput />}
+            defaultValue="CircleCI"
             sx={{ width: 150 }}
-            onChange={() => console.log("change")}
+            onChange={(e) => {
+              setTargetCi(e.target.value);
+            }}
           >
-            <MenuItem value={10}>CircleCI</MenuItem>
-            <MenuItem value={20}>GitLab CI</MenuItem>
+            <MenuItem value="CircleCI">Circle CI</MenuItem>
+            <MenuItem value="GitLabCI">GitLab CI</MenuItem>
           </Select>
         </FormControl>
       </Box>

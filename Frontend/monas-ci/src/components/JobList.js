@@ -5,24 +5,7 @@ import { Job } from "./Job";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-const jobs = [
-  {
-    name: "Job1",
-    docker: "ubuntu:latest",
-    commands: ["echo 'hello'", "mv hello.txt /test"],
-    envVars: [ { name: "TEST", value: "test" } ],
-    dependencies: ["Job2"],
-  },
-  {
-    name: "Job2",
-    docker: "ubuntu:latest",
-    commands: ["echo 'hello'", "echo 'hello'"],
-    envVars: [ { name: "TEST", value: "test" }, { name: "TEST2", value: "test2" } ],
-    dependencies: ["Job1"],
-  },
-];
-
-export const JobList = () => {
+export const JobList = ({ jobs, setOpenJobForm }) => {
   const [visibleDesc, setVisibleDesc] = React.useState(false);
 
   return (
@@ -50,7 +33,7 @@ export const JobList = () => {
       {jobs.map((job) => {
         return <Job job={job} />;
       })}
-      <AddJob />
+      <AddJob setOpen={setOpenJobForm} />
     </Box>
   );
 };
