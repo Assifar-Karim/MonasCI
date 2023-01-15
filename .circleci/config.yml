@@ -63,6 +63,12 @@ workflows:
               only: main
       - deployment-approval:
           type: approval
+          filters:
+            branches:
+              only: main
       - deploy-backend:
+          filters:
+            branches:
+              only: main
           requires:
             - deployment-approval
