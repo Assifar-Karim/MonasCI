@@ -1,19 +1,20 @@
 package com.monasCI.util;
 
-import org.springframework.util.ResourceUtils;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class FileReader
 {
-    public static String readFile(String path) throws FileNotFoundException
+    public static String readFile(String path)
     {
-        File file = ResourceUtils.getFile("classpath:".concat(path));
+        //File file = ResourceUtils.getFile("classpath:".concat(path));
+        ClassPathResource classPathResource = new ClassPathResource(path);
         String data = "";
         try
         (
-            InputStream inputStream = new FileInputStream(file);
+            InputStream inputStream = classPathResource.getInputStream();
         )
         {
           data = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);

@@ -55,7 +55,7 @@ public class M2MTransformationServiceImpl implements M2MTransformationService
     }
 
     @PostConstruct
-    public void loadFiles() throws FileNotFoundException
+    public void loadFiles()
     {
         targetTransformations = Map.of(
                 "gitlabCI", FileReader.readFile("transformations/GCIPM2gitlabCI.etl"),
