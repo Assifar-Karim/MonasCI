@@ -37,8 +37,11 @@ jobs:
           name: Change namespace
           command: okteto namespace use monasci-assifar-karim
       - run:
+          name: Add execution permissions to the maven wrapper
+          command: cd Backend && chmod +x ./mvnw
+      - run:
           name: Push the docker image to the internal container registry
-          command: okteto build -t okteto.dev/monasci-backend:1.0.0
+          command: cd backend && okteto build -t okteto.dev/monasci-backend:1.0.0 .
       - run:
           name: Deploy manifest to kubernetes cluster
           command: cd k8s && kubectl apply -f .
