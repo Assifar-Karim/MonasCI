@@ -14,6 +14,9 @@ jobs:
           name: Login to container registry
           command: echo "$CR_PASS" | docker login ghcr.io --username $CR_USER --password-stdin
       - run:
+          name: Add execution permissions to the maven wrapper
+          command: cd Backend && chmod +x ./mvnw
+      - run:
           name: Build the docker image
           command: cd Backend && docker build -t ghcr.io/$GH_USERNAME/$IMAGE_NAME:$IMAGE_TAG .
       - run:
