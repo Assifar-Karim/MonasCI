@@ -44,7 +44,7 @@ jobs:
           command: cd Backend && okteto build -t okteto.dev/monasci-backend:1.0.0 .
       - run:
           name: Install kubectl in container
-          command: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl && chown && sudo mv ./kubectl /usr/local/bin
+          command: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin
       - run:
           name: Deploy manifest to kubernetes cluster
           command: cd k8s && kubectl apply -f .
