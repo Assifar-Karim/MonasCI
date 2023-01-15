@@ -1,0 +1,28 @@
+version: 2
+
+jobs:
+  build-backend:
+    machine:
+      image: ubuntu-2204:2022.04.2
+    environment:
+      GH_USERNAME: assifar-karim
+      IMAGE_NAME: monasci-backend
+      IMAGE_TAG: 1.0
+    steps:
+      - checkout
+      - run:
+          name: Login to container registry
+          command: echo "$CR_PASS" | docker login --username $CR_USER --password-stdin
+      - run:
+          name: Build the docker image
+          command: cd Backend && docker build -t ghcr.io/$GH_USERNAME/$IMAGE_NAME:$IMAGE_TAG
+      - run:
+          name: Push the docker image
+          command: cd Backend && docker push ghcr.io/$GH_USERNAME/$IMAGE_NAME:$IMAGE_TAG
+
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-backend
