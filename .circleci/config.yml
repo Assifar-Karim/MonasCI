@@ -22,10 +22,38 @@ jobs:
       - run:
           name: Push the docker image
           command: cd Backend && docker push ghcr.io/$GH_USERNAME/$IMAGE_NAME:$IMAGE_TAG
+  deploy-backend:
+    docker:
+      - image: cimg/base:2023.01
+    steps:
+      - checkout
+      - run:
+          name: Download CLI
+          command: curl https://get.okteto.com -sSfL | sh
+      - run :
+          name: Load context
+          command: okteto context use https://cloud.okteto.com --token $OK_TOK
+      - run:
+          name: Change namespace
+          command: okteto namespace use monasci-assifar-karim
+      - run:
+          name: Push the docker image to the internal container registry
+          command: okteto build -t okteto.dev/monasci-backend:1.0.0
+      - run:
+          name: Deploy manifest to kubernetes cluster
+          command: cd k8s && kubectl apply -f .
 
 
 workflows:
   version: 2
   build:
     jobs:
-      - build-backend
+      - build-backend:
+          filters:
+            branches:
+              only: main
+      - deployment-approval:
+          type: approval
+      - deploy-backend:
+          requires:
+            - deployment-approval
