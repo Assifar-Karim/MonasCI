@@ -1,0 +1,74 @@
+version: 2
+
+jobs:
+  build-backend:
+    machine:
+      image: ubuntu-2204:2022.04.2
+    environment:
+      GH_USERNAME: assifar-karim
+      IMAGE_NAME: monasci-backend
+      IMAGE_TAG: 1.0
+    steps:
+      - checkout
+      - run:
+          name: Login to container registry
+          command: echo "$CR_PASS" | docker login ghcr.io --username $CR_USER --password-stdin
+      - run:
+          name: Add execution permissions to the maven wrapper
+          command: cd Backend && chmod +x ./mvnw
+      - run:
+          name: Build the docker image
+          command: cd Backend && docker build -t ghcr.io/$GH_USERNAME/$IMAGE_NAME:$IMAGE_TAG .
+      - run:
+          name: Push the docker image
+          command: cd Backend && docker push ghcr.io/$GH_USERNAME/$IMAGE_NAME:$IMAGE_TAG
+  deploy-backend:
+    docker:
+      - image: cimg/base:2023.01
+    steps:
+      - checkout
+      - run:
+          name: Download CLI
+          command: curl https://get.okteto.com -sSfL | sh
+      - run :
+          name: Load context
+          command: okteto context use https://cloud.okteto.com --token $OK_TOK
+      - run:
+          name: Change namespace
+          command: okteto namespace use monasci-assifar-karim
+      - run:
+          name: Add execution permissions to the maven wrapper
+          command: cd Backend && chmod +x ./mvnw
+      - run:
+          name: Push the docker image to the internal container registry
+          command: cd Backend && okteto build -t okteto.dev/monasci-backend:1.0.0 .
+      - run:
+          name: Install kubectl in container
+          command: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin
+      - run: 
+          name: Download kubeconfig
+          command: okteto kubeconfig
+      - run:
+          name: Deploy manifest to kubernetes cluster
+          command: cd k8s && kubectl apply -f .
+
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-backend:
+          filters:
+            branches:
+              only: main
+      - deployment-approval:
+          type: approval
+          filters:
+            branches:
+              only: main
+      - deploy-backend:
+          filters:
+            branches:
+              only: main
+          requires:
+            - deployment-approval

@@ -29,7 +29,7 @@ public class M2TTransformationServiceImpl implements M2TTransformationService
     }
 
     @PostConstruct
-    public void loadFiles() throws FileNotFoundException
+    public void loadFiles()
     {
         m2tTransformations = Map.of(
                 "gitlabCI", FileReader.readFile("transformations/gitlabCI.egl"),
