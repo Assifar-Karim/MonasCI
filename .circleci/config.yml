@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: Login to container registry
-          command: echo "$CR_PASS" | docker login --username $CR_USER --password-stdin
+          command: echo "$CR_PASS" | docker login ghcr.io --username $CR_USER --password-stdin
       - run:
           name: Build the docker image
           command: cd Backend && docker build -t ghcr.io/$GH_USERNAME/$IMAGE_NAME:$IMAGE_TAG
