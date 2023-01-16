@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: monasci-front
-        image: registry.cloud.okteto.net/assifar-karim/monasci-front:1.0.0
+        image: registry.cloud.okteto.net/monasci-assifar-karim/monasci-front:1.0.0
         ports:
         - containerPort: 80
         env:
