@@ -6,8 +6,12 @@ import { GlobalUnit } from "./GlobalUnit";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-
-export const GlobalUnits = ({globalUnits,setOpenGlobalUnitForm}) => {
+export const GlobalUnits = ({
+  globalUnits,
+  setOpenGlobalUnitForm,
+  setGlobalUnits,
+  setCurrentGlobalUnit,
+}) => {
   const [visibleDesc, setVisibleDesc] = React.useState(false);
   return (
     <Box display="flex" flexDirection="column" sx={{ width: "80%" }} gap={2}>
@@ -30,9 +34,20 @@ export const GlobalUnits = ({globalUnits,setOpenGlobalUnitForm}) => {
         <Typography>A global unit is regroupement of jobs</Typography>
       )}
       {globalUnits.map((globalUnit) => {
-        return <GlobalUnit globalUnit={globalUnit} />;
+        return (
+          <GlobalUnit
+            globalUnit={globalUnit}
+            globalUnits={globalUnits}
+            setGlobalUnits={setGlobalUnits}
+            setOpenGlobalUnitForm={setOpenGlobalUnitForm}
+            setCurrentGlobalUnit={setCurrentGlobalUnit}
+          />
+        );
       })}
-      <AddGlobalUnit setOpen={setOpenGlobalUnitForm} />
+      <AddGlobalUnit 
+        setOpen={setOpenGlobalUnitForm} 
+        setCurrentGlobalUnit={setCurrentGlobalUnit}
+      />
     </Box>
   );
 };

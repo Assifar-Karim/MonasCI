@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Box, Typography } from "@mui/material";
 
-export const AddJob = ({ setOpen }) => {
+export const AddJob = ({ setOpen, setCurrentJob }) => {
   return (
     <Box
       display="flex"
@@ -16,7 +16,16 @@ export const AddJob = ({ setOpen }) => {
         borderRadius: 2,
         cursor: "pointer",
       }}
-      onClick={() => setOpen(true)}
+      onClick={() => {
+        setCurrentJob({
+          name: "",
+          docker: "",
+          commands: [],
+          envVars: [],
+          dependencies: [],
+        });
+        setOpen(true);
+      }}
     >
       <Box>
         <Typography variant="h3">Add Job</Typography>

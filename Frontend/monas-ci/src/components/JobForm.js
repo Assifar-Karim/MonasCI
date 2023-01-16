@@ -11,14 +11,11 @@ import {
   DialogActions,
   DialogContent,
   FormControl,
-  InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
-  Stack,
   TextField,
   Typography,
-  useTheme,
 } from "@mui/material";
 import CommandCodeSnippet from "./CommandCodeSnippet";
 
@@ -38,10 +35,30 @@ export const JobForm = ({ jobs, open, setOpen, currentJob, setJobs }) => {
   const handleClose = () => setOpen(false);
   const [dependency, setDependency] = React.useState([]);
 
-  const [job, setJob] = React.useState(currentJob);
+  const [job, setJob] = React.useState({
+    name: "",
+    docker: "",
+    commands: [],
+    envVars: [],
+    dependencies: [],
+  });
   const [envVar, setEnvVar] = React.useState({ name: "", value: "" });
-  const addCommand = (value) => {
-    setJob({ ...job, commands: [...job.commands, value] });
+  const [command, setCommand] = React.useState({ name: "", task: "" });
+
+  React.useEffect(() => {
+    setJob(currentJob);
+  }, [currentJob]);
+
+  const handleCommandNameChange = (e) => {
+    setCommand({ ...command, name: e.target.value });
+  };
+  const handleCommandTaskChange = (e) => {
+    setCommand({ ...command, task: e.target.value });
+  };
+
+  const addCommand = () => {
+    setJob({ ...job, commands: [...job.commands, command] });
+    setCommand({ name: "", task: "" });
   };
 
   const handleSubmit = () => {
@@ -140,24 +157,41 @@ export const JobForm = ({ jobs, open, setOpen, currentJob, setJobs }) => {
                     alignItems="center"
                     gap={1}
                   >
-                    <CommandCodeSnippet content={command} />
+                    <Typography variant="h4">{command.name}</Typography>
+                    <CommandCodeSnippet content={command.task} />
                     <ClearIcon
                       sx={{ cursor: "pointer" }}
                       onClick={() => handleCommandDelete(index)}
                     />
                   </Box>
                 ))}
-                <TextField
-                  size="small"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      // @ts-ignore
-                      addCommand(e.target.value);
-                      // @ts-ignore
-                      e.target.value = "";
-                    }
-                  }}
-                />
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  alignItems="center"
+                  gap={1}
+                >
+                  <Typography>Name</Typography>
+                  <TextField
+                    name="commandName"
+                    size="small"
+                    value={command.name}
+                    sx={{ width: 150 }}
+                    onChange={handleCommandNameChange}
+                  />
+                  <Typography>Task</Typography>
+                  <TextField
+                    size="small"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        addCommand();
+                      }
+                    }}
+                    onChange={handleCommandTaskChange}
+                    value={command.task}
+                  />
+                  <AddIcon sx={{ cursor: "pointer" }} onClick={addCommand} />
+                </Box>
               </Box>
             </Box>
             <Box
@@ -237,11 +271,7 @@ export const JobForm = ({ jobs, open, setOpen, currentJob, setJobs }) => {
                   MenuProps={MenuProps}
                 >
                   {jobs.map((job) => (
-                    <MenuItem
-                      key={job.name}
-                      value={job.name}
-                      // style={getStyles(job, dependency, theme)}
-                    >
+                    <MenuItem key={job.name} value={job.name}>
                       {job.name}
                     </MenuItem>
                   ))}
@@ -260,7 +290,7 @@ export const JobForm = ({ jobs, open, setOpen, currentJob, setJobs }) => {
           onClick={handleSubmit}
           sx={{ textTransform: "none" }}
         >
-          Add Job
+          Submit
         </Button>
       </DialogActions>
     </Dialog>

@@ -5,7 +5,7 @@ import { Job } from "./Job";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
-export const JobList = ({ jobs, setOpenJobForm }) => {
+export const JobList = ({ jobs, setOpenJobForm, setJobs, setCurrentJob }) => {
   const [visibleDesc, setVisibleDesc] = React.useState(false);
 
   return (
@@ -31,9 +31,17 @@ export const JobList = ({ jobs, setOpenJobForm }) => {
         </Typography>
       )}
       {jobs.map((job) => {
-        return <Job job={job} />;
+        return (
+          <Job
+            job={job}
+            jobs={jobs}
+            setJobs={setJobs}
+            setOpenJobForm={setOpenJobForm}
+            setCurrentJob={setCurrentJob}
+          />
+        );
       })}
-      <AddJob setOpen={setOpenJobForm} />
+      <AddJob setOpen={setOpenJobForm} setCurrentJob={setCurrentJob}/>
     </Box>
   );
 };

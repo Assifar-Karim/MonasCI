@@ -43,7 +43,15 @@ export const GlobalUnitForm = ({
   const [job, setJob] = React.useState([]);
   const [dependsOn, setDependsOn] = React.useState([]);
 
-  const [globalUnit, setGlobalUnit] = React.useState(currentGlobalUnit);
+  const [globalUnit, setGlobalUnit] = React.useState({
+    name: "",
+    jobs: [],
+    depends_on: [],
+  });
+
+  React.useEffect(() => {
+    setGlobalUnit(currentGlobalUnit);
+  }, [currentGlobalUnit]);
 
   const handleNameChange = (e) => {
     setGlobalUnit({ ...globalUnit, name: e.target.value });
@@ -184,7 +192,7 @@ export const GlobalUnitForm = ({
           onClick={handleSubmit}
           sx={{ textTransform: "none" }}
         >
-          Add Global Unit
+          Submit
         </Button>
       </DialogActions>
     </Dialog>

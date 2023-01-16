@@ -5,7 +5,24 @@ import WorkIcon from "@mui/icons-material/Work";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export const GlobalUnit = ({ globalUnit }) => {
+export const GlobalUnit = ({
+  globalUnit,
+  globalUnits,
+  setGlobalUnits,
+  setOpenGlobalUnitForm,
+  setCurrentGlobalUnit,
+}) => {
+  const deleteGlobalUnit = () => {
+    let newGlobalUnits = globalUnits.filter(
+      (globalUnit) => globalUnit.name !== globalUnit.name
+    );
+    setGlobalUnits(newGlobalUnits);
+  };
+  const editGlobalUnit = () => {
+    setCurrentGlobalUnit(globalUnit);
+    setOpenGlobalUnitForm(true);
+  };
+
   return (
     <Box
       display="flex"
@@ -32,6 +49,7 @@ export const GlobalUnit = ({ globalUnit }) => {
             }}
             fontSize="small"
             color="primary"
+            onClick={editGlobalUnit}
           />
           <DeleteIcon
             sx={{
@@ -44,6 +62,7 @@ export const GlobalUnit = ({ globalUnit }) => {
             }}
             fontSize="small"
             color="secondary"
+            onClick={deleteGlobalUnit}
           />
         </Box>
       </Box>

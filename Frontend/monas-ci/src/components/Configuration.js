@@ -60,14 +60,14 @@ export const Configuration = ({setTargetCi}) => {
             labelId="demo-customized-select-label"
             id="demo-customized-select"
             input={<BootstrapInput />}
-            defaultValue="CircleCI"
+            defaultValue="circleCI"
             sx={{ width: 150 }}
             onChange={(e) => {
               setTargetCi(e.target.value);
             }}
           >
-            <MenuItem value="CircleCI">Circle CI</MenuItem>
-            <MenuItem value="GitLabCI">GitLab CI</MenuItem>
+            <MenuItem value="circleCI">Circle CI</MenuItem>
+            <MenuItem value="gitlabCI">GitLab CI</MenuItem>
           </Select>
         </FormControl>
       </Box>

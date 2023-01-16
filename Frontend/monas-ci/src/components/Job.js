@@ -5,7 +5,17 @@ import CommandCodeSnippet from "./CommandCodeSnippet";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export const Job = ({ job }) => {
+export const Job = ({ job, jobs, setJobs, setOpenJobForm, setCurrentJob }) => {
+  const deleteJob = () => {
+    let newJobs = jobs.filter((j) => j.name !== job.name);
+    setJobs(newJobs);
+  };
+
+  const editJob = () => {
+    setCurrentJob(job);
+    setOpenJobForm(true);
+  };
+
   return (
     <Box
       display="flex"
@@ -31,6 +41,7 @@ export const Job = ({ job }) => {
               },
             }}
             fontSize="small"
+            onClick={editJob}
           />
           <DeleteIcon
             sx={{
@@ -42,6 +53,7 @@ export const Job = ({ job }) => {
               },
             }}
             fontSize="small"
+            onClick={deleteJob}
           />
         </Box>
       </Box>
@@ -51,11 +63,19 @@ export const Job = ({ job }) => {
           {job.docker}
         </Typography>
       </Box>
-      <Box display="flex" flexDirection="row" gap={3} alignItems="flex-start">
+      <Box
+        display="flex"
+        flexDirection="row"
+        gap={3}
+        alignItems={job.commands.length > 1 ? "flex-start" : "center"}
+      >
         <Typography variant="h4">Commands:</Typography>
         <Box display="flex" flexDirection="column" gap={1}>
           {job.commands.map((command) => (
-            <CommandCodeSnippet content={command} />
+            <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
+              <Typography variant="h4">{command.name}</Typography>
+              <CommandCodeSnippet content={command.task} />
+            </Box>
           ))}
         </Box>
       </Box>

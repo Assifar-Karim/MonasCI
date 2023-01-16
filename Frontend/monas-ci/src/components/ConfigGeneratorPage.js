@@ -13,7 +13,7 @@ export const ConfigGeneratorPage = () => {
   const [ciConfig, setCiConfig] = React.useState({
     jobs: [],
     globalUnits: [],
-    targetCi: "CircleCI",
+    targetCi: "circleCI",
   });
   const [configFileResponse, setConfigFileResponse] = React.useState("");
   const [currentJob, setCurrentJob] = React.useState({
@@ -30,7 +30,10 @@ export const ConfigGeneratorPage = () => {
   });
   const [openJobForm, setOpenJobForm] = React.useState(false);
   const [openGlobalUnitForm, setOpenGlobalUnitForm] = React.useState(false);
-
+  const setJobs = (jobs) => setCiConfig({ ...ciConfig, jobs });
+  const setGlobalUnits = (globalUnits) =>
+    setCiConfig({ ...ciConfig, globalUnits });
+  const setTargetCi = (targetCi) => setCiConfig({ ...ciConfig, targetCi });
   return (
     <Box
       display="flex"
@@ -40,17 +43,24 @@ export const ConfigGeneratorPage = () => {
       gap={5}
     >
       <ConfigGeneratorHeader />
-      <JobList jobs={ciConfig.jobs} setOpenJobForm={setOpenJobForm} />
+      <JobList
+        jobs={ciConfig.jobs}
+        setOpenJobForm={setOpenJobForm}
+        setJobs={setJobs}
+        setCurrentJob={setCurrentJob}
+      />
       <JobForm
         open={openJobForm}
         setOpen={setOpenJobForm}
         currentJob={currentJob}
         jobs={ciConfig.jobs}
-        setJobs={(jobs) => setCiConfig({ ...ciConfig, jobs })}
+        setJobs={setJobs}
       />
       <GlobalUnits
         globalUnits={ciConfig.globalUnits}
         setOpenGlobalUnitForm={setOpenGlobalUnitForm}
+        setCurrentGlobalUnit={setCurrentGlobalUnit}
+        setGlobalUnits={setGlobalUnits}
       />
       <GlobalUnitForm
         jobs={ciConfig.jobs}
@@ -58,13 +68,9 @@ export const ConfigGeneratorPage = () => {
         setOpen={setOpenGlobalUnitForm}
         globalUnits={ciConfig.globalUnits}
         currentGlobalUnit={currentGlobalUnit}
-        setGlobalUnits={(globalUnits) =>
-          setCiConfig({ ...ciConfig, globalUnits })
-        }
+        setGlobalUnits={setGlobalUnits}
       />
-      <Configuration
-        setTargetCi={(targetCi) => setCiConfig({ ...ciConfig, targetCi })}
-      />
+      <Configuration setTargetCi={setTargetCi} />
       <Button
         variant="contained"
         color="primary"
