@@ -36,10 +36,10 @@ jobs:
           command: echo "$CR_PASS" | docker login ghcr.io --username $CR_USER --password-stdin
       - run:
           name: Build the docker image
-          command: cd Frontend && docker build -t ghcr.io/$GH_USERNAME/$IMAGE_NAME:$IMAGE_TAG .
+          command: cd Frontend/monas-ci && docker build -t ghcr.io/$GH_USERNAME/$IMAGE_NAME:$IMAGE_TAG .
       - run:
           name: Push the docker image
-          command: cd Frontend && docker push ghcr.io/$GH_USERNAME/$IMAGE_NAME:$IMAGE_TAG
+          command: cd Frontend/monas-ci && docker push ghcr.io/$GH_USERNAME/$IMAGE_NAME:$IMAGE_TAG
   deploy-backend:
     docker:
       - image: cimg/base:2023.01
