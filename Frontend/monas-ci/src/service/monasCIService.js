@@ -1,5 +1,9 @@
 import axios from "axios";
 
+// @ts-ignore
+const API_URL = window._env_.API_URL;
+
+
 export const generateConfigFile = (
   ciConfig = {
     jobs: [],
@@ -9,12 +13,10 @@ export const generateConfigFile = (
 ) => {
   let requestBody = prepareRequestBody(ciConfig);
   console.log(requestBody);
-  axios
-    .post("http://localhost:8080/forwards", requestBody)
-    .then((response) => {
-      console.log(response.data);
-      setConfigFileResponse(response.data);
-    });
+  axios.post(`${API_URL}/forwards`, requestBody).then((response) => {
+    console.log(response.data);
+    setConfigFileResponse(response.data);
+  });
 };
 
 function prepareRequestBody(ciConfig) {
