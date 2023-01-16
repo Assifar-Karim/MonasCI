@@ -68,7 +68,7 @@ jobs:
           command: okteto kubeconfig
       - run:
           name: Deploy manifest to kubernetes cluster
-          command: cd k8s && kubectl apply -f .
+          command: cd k8s && kubectl apply -f backend.yml
      
   deploy-frontend:
     docker:
@@ -95,7 +95,7 @@ jobs:
           command: okteto kubeconfig
       - run:
           name: Deploy manifest to kubernetes cluster
-          command: cd k8s && kubectl apply -f .
+          command: cd k8s && kubectl apply -f frontend.yml
 
 workflows:
   version: 2
