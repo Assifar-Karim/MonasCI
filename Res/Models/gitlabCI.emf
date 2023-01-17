@@ -4,7 +4,6 @@
          
 package config;
 
-
 class ConfigYml {
     val Stage[+] stages;
 }
@@ -20,7 +19,6 @@ class Job {
     val Script[1] script;
     val Environment[*] environmentVariables;
 }
-
 
 class Docker {
     attr String[1] image;
@@ -38,44 +36,3 @@ class Environment {
     attr String[1] name;
     attr String[1] value;
 }
-
-
-/* 
--> example of yml workflow that repect this stucture ! 
--------------------------------------------------
-
-stages:
-  - build
-  - test
-  - deploy
-
-jobs:
-  build:
-    stage: build
-    script:
-      - echo "Build app"
-      - make build
-    environment:
-      - CI=true
-    dependencies:
-      - test
-    image: python:2.7
-  test:
-    stage: test
-    script:
-      - echo "Running tests"
-      - make test
-    environment:
-      - CI=true
-    image: python:2.7
-  deploy:
-    stage: deploy
-    script:
-      - echo "Deploying application"
-      - make deploy
-    environment:
-      - CI=true
-    dependencies:
-      - build
-    image: python:2.7
-*/
