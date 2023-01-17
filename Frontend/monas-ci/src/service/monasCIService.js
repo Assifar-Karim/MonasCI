@@ -11,6 +11,7 @@ export const generateConfigFile = (
   },
   setConfigFileResponse
 ) => {
+  console.log(ciConfig);
   let requestBody = prepareRequestBody(ciConfig);
   console.log(requestBody);
   axios.post(`${API_URL}/forwards`, requestBody).then((response) => {
@@ -67,7 +68,7 @@ function prepareFlexmiJob(job) {
     flexmiJob += `<environmentVar key="${envVar.name}" value="${envVar.value}"/>`;
   });
   job.dependencies.forEach((dependency) => {
-    flexmiJob += `<dependency dependencies="${dependency.name}"/>`;
+    flexmiJob += `<dependency dependencies="${dependency}"/>`;
   });
   flexmiJob += "</job>";
   return flexmiJob;
